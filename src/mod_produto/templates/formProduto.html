@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Produto{% endblock %}
+
+{% block content %}
+<section class="content">
+	<form name="formAdicionar" id="formAdicionar" action="" method="POST">
+		<h1>Produto</h1>
+
+		<div class="mb-3">
+			<label class="form-label" for="id">Código</label>
+			<input class="form-control" class="form-control" type="text" name="id" id="id" value="" placeholder="Código" readonly>
+		</div>
+		
+		<div class="mb-3">
+			<label class="form-label" for="nome">Nome Produto</label>
+			<input class="form-control" type="text" name="nome" id="nome" value="" placeholder="Nome Produto" maxlength="100" autofocus required>
+		</div>
+		
+		<div class="mb-3">
+			<label class="form-label" for="descricao">Descrição</label>
+			<textarea class="form-control" type="text" name="descricao" id="descricao" value="" placeholder="Descrição" maxlength="200" required></textarea>
+		</div>
+		
+		<div class="mb-3">
+			<label class="form-label" for="foto" class="form-label">Foto</label>
+			<input class="form-control" type="file" name="foto" id="foto" value="" placeholder="Foto" required>
+		</div>
+		
+		<div class="mb-3 text-end">
+			<button class="btn btn-success" type='submit' name='salvaUsuarioDB' id='salvaUsuarioDB'><i class='fas fa-save'></i> Salvar</button>
+		</div>
+	</form>
+</section>
+{% endblock %}
+
+{% block script %}
+	<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+{% endblock %}

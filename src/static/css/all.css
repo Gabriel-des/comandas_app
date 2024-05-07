@@ -1,0 +1,39 @@
+nav {
+    margin-bottom: 20px;
+    padding: 10px!important;
+    justify-content: left!important;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 25px;
+}
+
+nav a:hover {
+    cursor: pointer;
+    color: lightblue;
+}
+
+footer {
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: #000;
+    color: white;
+}
+
+.centralize {
+    width: 100% !important;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    height: 70vh;
+}
+
+.content {
+    padding: 0 30px;
+}

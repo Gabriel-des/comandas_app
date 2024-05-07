@@ -1,14 +1,39 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends "base.html" %}
 
-<head>
-	<meta charset="UTF-8">
-	<title>Produtos</title>
-</head>
+{% block title %}Produtos{% endblock %}
 
-<body>
-	<h1>Rota da página de Produtos da nossa WEB APP</h1>
-	<h1>Uso de render_template</h1>
-</body>
-
-</html>
+{% block content %}
+<section class="content">
+	<form action="{{ url_for('produto.formProduto') }}" method="GET">
+		<h1>Produtos</h1>
+		<div class="text-end my-4">
+			<button class="btn btn-outline-secondary" type="submit" name="formNovo">Novo Produto</button>
+		</div>
+	</form>
+	<table class="table">
+		<thead>
+			<tr class="text-center">
+				<th scope="col">#</th>
+				<th scope="col">Nome</th>
+				<th scope="col">Descrição</th>
+				<th scope="col">Foto</th>
+				<th scope="col">Valor</th>
+				<th scope="col">Editar</th>
+				<th scope="col">Deletar</th>
+			</tr>
+		</thead>
+	
+		<tbody>
+			<tr>
+				<th scope="row">...</th>
+				<td>...</td>
+				<td>...</td>
+				<td>...</td>
+				<td>...</td>
+				<td class="text-center"><i class="fas fa-edit"></i></td>
+				<td class="text-center"><i class="fas fa-trash"></i></td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+{% endblock %}

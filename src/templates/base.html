@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}{% endblock %} - AbcBolinhas</title>
+
+	{% block style %}{% endblock %}
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
+</head>
+
+<body>
+	{% block menu %}
+		<nav class="navbar navbar-dark bg-dark">
+			<a href="{{ url_for('index.formListaIndex') }}"><i class="fas fa-home"></i> HOME</a>
+			<a href="{{ url_for('funcionario.formListaFuncionario') }}"><i class="fas fa-cart-arrow-down"></i> FUNCIONÁRIOS</a>
+			<a href="{{ url_for('cliente.formListaCliente') }}"><i class="fas fa-users"></i> CLIENTES</a>
+			<a href="{{ url_for('produto.formListaProduto') }}"><i class="fas fa-pizza-slice"></i> PRODUTOS</a>
+		</nav>
+	{% endblock %}
+
+	{% block content %}{% endblock %}
+
+	{% block js %}{% endblock %}
+	<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='fontawesome/js/all.js') }}"></script>
+
+	{% if request.args.get('msg'): %}
+		<h3>{{ request.args.get('msg') }}</h3><br>
+	{% elif msg: %}
+		<h3>{{ msg }}</h3><br>
+	{% elif request.args.get('msgErro'): %}
+		<h3>{{ request.args.get('msgErro') }}</h3><br>
+	{% elif msgErro: %}
+		<h3>{{ msgErro }}</h3><br>
+	{% endif %}
+
+	{% block script %}{% endblock %}
+</body>
+
+<footer>
+	{% block footer %}
+	&copy; Copyright 2024 by <a href="http://127.0.0.1:5000/">AbcBolinhas</a>.
+	{% endblock %}
+</footer>
+
+</html>
