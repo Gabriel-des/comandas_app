@@ -10,9 +10,9 @@
 			<button class="btn btn-outline-secondary" type="submit" name="formNovo">Novo Produto</button>
 		</div>
 	</form>
-	<table class="table">
+	<table class="table text-center">
 		<thead>
-			<tr class="text-center">
+			<tr>
 				<th scope="col">#</th>
 				<th scope="col">Nome</th>
 				<th scope="col">Descrição</th>
@@ -24,15 +24,19 @@
 		</thead>
 	
 		<tbody>
+			{% if result %}
+			{% for row in result %}
 			<tr>
-				<th scope="row">...</th>
-				<td>...</td>
-				<td>...</td>
-				<td>...</td>
-				<td>...</td>
-				<td class="text-center"><i class="fas fa-edit"></i></td>
-				<td class="text-center"><i class="fas fa-trash"></i></td>
+				<th scope="row"> {{ row['id_produto'] }} </th>
+				<td> {{ row['nome'] }} </td>
+				<td> {{ row['descricao'] }} </td>
+				<td> {{ row['foto'] }} </td>
+				<td> {{ row['valor'] }} </td>
+				<td><i class="fas fa-edit"></i></td>
+				<td><i class='fas fa-trash'></i></td>
 			</tr>
+			{% endfor %}
+			{% endif %}
 		</tbody>
 	</table>
 </section>
