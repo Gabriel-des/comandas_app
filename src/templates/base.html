@@ -17,13 +17,14 @@
 
 <body>
 	{% block menu %}
-		<nav class="navbar navbar-dark bg-dark">
-			<a href="{{ url_for('index.formListaIndex') }}"><i class="fas fa-home"></i> HOME</a>
-			<a href="{{ url_for('funcionario.formListaFuncionario') }}"><i class="fas fa-cart-arrow-down"></i> FUNCIONÁRIOS</a>
-			<a href="{{ url_for('cliente.formListaCliente') }}"><i class="fas fa-users"></i> CLIENTES</a>
-			<a href="{{ url_for('produto.formListaProduto') }}"><i class="fas fa-pizza-slice"></i> PRODUTOS</a>
-			<a href="{{ url_for('login.logoff') }}"><i class="fas fa-door-open"></i> Sair</a>
-		</nav>
+	<nav class="navbar navbar-dark bg-dark">
+		<a href="{{ url_for('index.formListaIndex') }}"><i class="fas fa-home"></i> HOME</a>
+		<a href="{{ url_for('funcionario.formListaFuncionario') }}"><i class="fas fa-cart-arrow-down"></i>
+			FUNCIONÁRIOS</a>
+		<a href="{{ url_for('cliente.formListaCliente') }}"><i class="fas fa-users"></i> CLIENTES</a>
+		<a href="{{ url_for('produto.formListaProduto') }}"><i class="fas fa-pizza-slice"></i> PRODUTOS</a>
+		<a href="{{ url_for('login.logoff') }}"><i class="fas fa-door-open"></i> Sair</a>
+	</nav>
 	{% endblock %}
 
 	{% block content %}{% endblock %}
@@ -31,15 +32,42 @@
 	{% block js %}{% endblock %}
 	<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='fontawesome/js/all.js') }}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 	{% if request.args.get('msg'): %}
-		<h3>{{ request.args.get('msg') }}</h3><br>
+	<script>
+		Swal.fire({
+			icon: "success",
+			title: "Sucesso!",
+			text: '{{msg}}'
+		});
+	</script>
 	{% elif msg: %}
-		<h3>{{ msg }}</h3><br>
+	<script>
+		console.log(JSON.parse('{{detail}}'))
+		Swal.fire({
+			icon: "success",
+			title: "Sucesso!",
+			text: '{{msg}}'
+		});
+	</script>
 	{% elif request.args.get('msgErro'): %}
-		<h3>{{ request.args.get('msgErro') }}</h3><br>
+	<script>
+		Swal.fire({
+			icon: "error",
+			title: "Erro!",
+			text: "{{request.args.get('msgErro')}}"
+		});
+	</script>
 	{% elif msgErro: %}
-		<h3>{{ msgErro }}</h3><br>
+	<script>
+		Swal.fire({
+			icon: "error",
+			title: "Erro!",
+			text: '{{msgErro}}'
+		});
+	</script>
 	{% endif %}
 
 	{% block script %}{% endblock %}
