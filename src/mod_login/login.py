@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 import requests
 from settings import ENDPOINT_TOKEN
 from datetime import datetime, timedelta
+from functools import wraps
 
 bp_login = Blueprint('login', __name__, url_prefix='/', template_folder='templates')
 
@@ -58,3 +59,16 @@ def logoff():
 	
 	# retorna para a tela de login
 	return redirect(url_for('login.login'))
+
+# valida se o token esta na sessão e se ainda é válido
+def validaToken(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'token_validade' in session and session['token_validade'] > datetime.timestamp(datetime.now()):
+            # retorna os dados copiados da função original
+            return f(*args, **kwargs)
+        else:
+            return redirect(url_for('login.login', msgErro='Usuário não logado! Token expirado!'))
+
+    # retorna o resultado do if acima
+    return decorated_function

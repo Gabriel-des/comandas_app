@@ -2,29 +2,40 @@
 
 {% block title %}Cliente{% endblock %}
 
+{# ajusta a variáveis conforme novo ou edit #}
+{% set id = result[0].id_cliente if result else '0' %}
+{% set nome = result[0].nome if result else '' %}
+{% set cpf = result[0].cpf if result else '' %}
+{% set telefone = result[0].telefone if result else '' %}
+
 {% block content %}
 <section class="content">
-	<form name="formAdicionar" id="formAdicionar" action="" method="POST">
-		<h1>Cliente</h1>
+	<form 
+		name="{{ 'formEditar' if result else 'formAdicionar' }}" 
+		id="{{ 'formEditar' if result else 'formAdicionar' }}" 
+		action="{{ url_for('cliente.edit') if result else url_for('cliente.insert') }}" 
+		method="POST">
+		<h1>Cliente - {{ "%s: %s" % ('Editar Registro', id) if result else
+			'Novo' }}</h1>
 
 		<div class="mb-3">
 			<label class="form-label" for="id">Código</label>
-			<input class="form-control" class="form-control" type="text" name="id" id="id" value="" placeholder="Código" readonly>
+			<input class="form-control" class="form-control" type="text" name="id" id="id" value="{{ id }}" placeholder="Código" readonly>
 		</div>
 		
 		<div class="mb-3">
 			<label class="form-label" for="nome">Nome Cliente</label>
-			<input class="form-control" type="text" name="nome" id="nome" value="" placeholder="Nome Cliente" maxlength="100" autofocus required>
+			<input class="form-control" type="text" name="nome" id="nome" value="{{ nome }}" placeholder="Nome Cliente" maxlength="100" autofocus required>
 		</div>
 		
 		<div class="mb-3">
 			<label class="form-label" for="cpf">CPF</label>
-			<input class="form-control" type="text" name="cpf" id="cpf" value="" placeholder="CPF" maxlength="14" oninput="mascaraCpf(this)" required>
+			<input class="form-control" type="text" name="cpf" id="cpf" value="{{ cpf }}" placeholder="CPF" maxlength="14" oninput="mascaraCpf(this)" required>
 		</div>
 		
 		<div class="mb-3">
 			<label class="form-label" for="telefone" class="form-label">Telefone</label>
-			<input class="form-control" type="tel" name="telefone" id="telefone" value="" placeholder="Telefone" maxlength="15" oninput="mascaraTelefone(this)" required>
+			<input class="form-control" type="tel" name="telefone" id="telefone" value="{{ telefone }}" placeholder="Telefone" maxlength="15" oninput="mascaraTelefone(this)" required>
 		</div>
 		
 		<div class="mb-3 text-end">

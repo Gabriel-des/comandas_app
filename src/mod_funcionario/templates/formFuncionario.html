@@ -15,9 +15,11 @@
 <section class="content">
 	<h3 class="d-flex justify-content-center mb-5">Funcionário - {{ "%s: %s" % ('Editar Registro', id) if result else
 		'Novo' }}</h3>
-	<form name="{{ 'formEditar' if result else 'formAdicionar' }}"
+	<form 
+		name="{{ 'formEditar' if result else 'formAdicionar' }}"
 		id="{{ 'formEditar' if result else 'formAdicionar' }}" class="row was-validated"
-		action="{{ url_for('funcionario.edit') if result else url_for('funcionario.insert') }}" method="POST">
+		action="{{ url_for('funcionario.edit') if result else url_for('funcionario.insert') }}" 
+		method="POST">
 
 		<div class="mb-3">
 			<label class="form-label" for="id">Código</label>
