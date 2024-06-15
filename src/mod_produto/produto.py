@@ -4,8 +4,11 @@ import requests
 import base64
 from mod_login.login import validaToken
 from settings import getHeadersAPI, ENDPOINT_PRODUTO
+from funcoes import Funcoes
 
 bp_produto = Blueprint('produto', __name__, url_prefix="/produto", template_folder='templates')
+
+prod_data = []
 
 ''' rotas dos formulários '''
 
@@ -19,6 +22,7 @@ def formListaProduto():
 		if (response.status_code != 200):
 			raise Exception(result)
 
+		prod_data.append(result[0])
 		return render_template('formListaProduto.html', result=result[0])
 
 	except Exception as e:
@@ -69,7 +73,6 @@ def insert():
         # Executa o verbo POST da API e armazena seu retorno
         response = requests.post(ENDPOINT_PRODUTO, headers=getHeadersAPI(), json=payload)
         result = response.json()
-        print(result)
         
         if (response.status_code != 200 or result[1] != 200):
             raise Exception(result)
@@ -125,3 +128,13 @@ def delete():
     
     except Exception as e:
         return jsonify(erro=True, msgErro=e.args[0])
+    
+@bp_produto.route('/gera-pdf', methods=['GET', 'POST'])
+@validaToken
+def geraPdf():
+	try: 
+		pdf_file = Funcoes.generate_pdf_file(prod_data[0], "Produtos")
+		
+		return send_file(pdf_file, as_attachment=True, download_name='produto.pdf')
+	except Exception as e:
+		return jsonify(erro=True, msgErro=e.args[0])

@@ -8,6 +8,7 @@
 		<h1>Produtos</h1>
 		<div class="text-end my-4">
 			<button class="btn btn-outline-secondary" type="submit" name="formNovo">Novo Produto</button>
+			<a href="{{ url_for('produto.geraPdf') }}" class="btn btn-outline-secondary ml-3" type="submit" name="geraPdf">Gerar PDF</a>
 		</div>
 	</form>
 	<table class="table text-center">

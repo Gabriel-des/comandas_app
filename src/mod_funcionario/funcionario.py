@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, redirect, send_file, url_for, jsonify
 import requests
 from funcoes import Funcoes
 from settings import getHeadersAPI, ENDPOINT_FUNCIONARIO
 from mod_login.login import validaToken
 
 bp_funcionario = Blueprint('funcionario', __name__, url_prefix="/funcionario", template_folder='templates')
+func_data = []
 
 ''' rotas dos formulários '''
 
@@ -18,6 +19,7 @@ def formListaFuncionario():
 		if (response.status_code != 200):
 			raise Exception(result)
 
+		func_data.append(result[0])
 		return render_template('formListaFuncionario.html', result=result[0])
 
 	except Exception as e:
@@ -131,3 +133,13 @@ def delete():
     
     except Exception as e:
         return jsonify(erro=True, msgErro=e.args[0])
+    
+@bp_funcionario.route('/gera-pdf', methods=['GET', 'POST'])
+@validaToken
+def geraPdf():
+	try:
+		pdf_file = Funcoes.generate_pdf_file(func_data[0], "Funcionários")
+		
+		return send_file(pdf_file, as_attachment=True, download_name='funcionario.pdf')
+	except Exception as e:
+		return jsonify(erro=True, msgErro=e.args[0])

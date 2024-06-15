@@ -1,10 +1,11 @@
-from flask import Blueprint, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, jsonify, redirect, render_template, request, send_file, url_for
 import requests
 from funcoes import Funcoes
 from mod_login.login import validaToken
 from settings import getHeadersAPI, ENDPOINT_CLIENTE
 
 bp_cliente = Blueprint('cliente', __name__, url_prefix="/cliente", template_folder='templates')
+cli_data = []
 
 ''' rotas dos formulários '''
 
@@ -18,6 +19,7 @@ def formListaCliente():
 		if (response.status_code != 200):
 			raise Exception(result)
 
+		cli_data.append(result[0])
 		return render_template('formListaCliente.html', result=result[0])
 
 	except Exception as e:
@@ -119,3 +121,13 @@ def delete():
     
     except Exception as e:
         return render_template('formListaCliente.html', msgErro=e.args[0])
+    
+@bp_cliente.route('/gera-pdf', methods=['GET', 'POST'])
+@validaToken
+def geraPdf():
+	try:
+		pdf_file = Funcoes.generate_pdf_file(cli_data[0], "Clientes")
+		
+		return send_file(pdf_file, as_attachment=True, download_name='cliente.pdf')
+	except Exception as e:
+		return jsonify(erro=True, msgErro=e.args[0])
